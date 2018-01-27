@@ -520,7 +520,9 @@ STATIC mp_obj_t get_socket(size_t n_args, const mp_obj_t *args) {
 }
 STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(get_socket_obj, 0, 3, get_socket);
 
-STATIC mp_obj_t esp_socket_getaddrinfo(const mp_obj_t host, const mp_obj_t port) {
+STATIC mp_obj_t esp_socket_getaddrinfo(size_t n_args, const mp_obj_t *args) {
+    mp_obj_t host = args[0];
+    mp_obj_t port = args[1];
     struct addrinfo *res = NULL;
     _socket_getaddrinfo2(host, port, &res);
     mp_obj_t ret_list = mp_obj_new_list(0, NULL);
@@ -552,7 +554,7 @@ STATIC mp_obj_t esp_socket_getaddrinfo(const mp_obj_t host, const mp_obj_t port)
     if (res) lwip_freeaddrinfo(res);
     return ret_list;
 }
-STATIC MP_DEFINE_CONST_FUN_OBJ_2(esp_socket_getaddrinfo_obj, esp_socket_getaddrinfo);
+STATIC MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(esp_socket_getaddrinfo_obj, 2, 6, esp_socket_getaddrinfo);
 
 STATIC mp_obj_t esp_socket_initialize() {
     static int initialized = 0;
